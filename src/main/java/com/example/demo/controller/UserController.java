@@ -5,8 +5,10 @@ import com.example.demo.entity.User;
 import com.example.demo.response.ApiResponse;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +32,12 @@ public class UserController {
     }
 
     @GetMapping
-    public ApiResponse<List<User>> getAllUser(){
-        List<User> users = userService.getUsers();
-        return new ApiResponse<>(0, "success", users);
+    public ApiResponse<Page<User>> getAllUser(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        Page<User> users = userService.getUsers(page, size);
+        return new ApiResponse<>(200, "Lấy danh sách thành công", users);
     }
 
     @GetMapping("/{id}")

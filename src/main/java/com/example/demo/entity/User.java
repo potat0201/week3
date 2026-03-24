@@ -1,9 +1,22 @@
 package com.example.demo.entity;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private int age;
 
     public User(long id, String name, String email, int age) {
@@ -14,7 +27,12 @@ public class User {
     }
 
     public User(){
+    }
 
+    public User(String name, String email, int age) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
     }
 
     public long getId() {
